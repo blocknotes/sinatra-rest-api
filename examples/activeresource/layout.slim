@@ -1,0 +1,78 @@
+doctype html
+html
+  head
+    title Test
+    link rel='stylesheet' href='http://yui.yahooapis.com/pure/0.6.0/pure-min.css'
+    css:
+      a { color: #b00; text-decoration: none; }
+      body { padding: 0 15px; }
+      input[type='submit'] { margin-top: 15px; }
+      form { margin-top: 30px; }
+      hr { margin: 20px 0; }
+      legend { font-style: italic; font-weight: bold; }
+      table { font-size: 13px; }
+  body
+    == yield
+    - unless @links.nil?
+      / Menu
+      div
+        - @links.each do |link|
+          a.pure-button.pure-button-primary href="#{link[0]}" = link[1]
+          | &nbsp;
+    hr
+    - if !@list.nil? && @list.any?
+      / List
+      table.pure-table
+        thead
+          th
+            - @list.first.attributes.keys.each do |col|
+              th = col
+        tbody
+          - @list.each_with_index do |row, index|
+            tr
+              td
+                a href="#{request.path_info + '/' + row.id.to_s}"
+                  = '#' + ( index + 1 ).to_s
+              - row.attributes.each do |cell|
+                - value = cell[1]
+                td
+                  - if value.is_a? Array
+                    = value.map( &:id ).join( ', ' )
+                  - elsif value.class.ancestors.include? ActiveResource::Base
+                    = value.name if value.attributes.has_key? :name
+                    = value.title if value.attributes.has_key? :title
+                  - else
+                    = value
+    - if !@details.nil? && !@model.nil?
+      / Edit
+      form.pure-form.pure-form-stacked method='post' action=''
+        fieldset
+          legend = 'Edit ' + @model
+        table.pure-table
+          - @details.attributes.each do |key, value|
+            tr
+              td
+                b = key
+              td
+                - if value.is_a? Array
+                  = value.map( &:id ).join( ', ' )
+                - elsif value.class.ancestors.include? ActiveResource::Base
+                  = value.name if value.attributes.has_key? :name
+                  = value.title if value.attributes.has_key? :title
+                - elsif key == 'id'
+                  = value
+                - else
+                  input type='text' name="#{@model}[#{key}]" value="#{value}"
+        input.pure-button.pure-button-success type='submit' value='update'
+      form.pure-form.pure-form-stacked method='delete' action='#{params[:id]}/delete'
+        input.pure-button.pure-button-success type='submit' value='delete'
+    - elsif !@model.nil?
+      / Form new
+      form.pure-form.pure-form-stacked method='post' action=''
+        fieldset
+          legend = 'Create ' + @model
+          - @list.first.attributes.keys.each do |col|
+            - if col != 'id'
+              label = col
+              input type='text' name="#{@model}[#{col}]" value=''
+          input.pure-button.pure-button-success type='submit' value='create'

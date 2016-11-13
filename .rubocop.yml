@@ -1,0 +1,34 @@
+AllCops:
+  TargetRubyVersion: 2.1
+
+# generic rules
+Metrics/LineLength:
+  Enabled: false
+Style/FileName:
+  Enabled: false
+Style/SpaceInsideBrackets:
+  Enabled: false
+Style/SpaceInsideParens:
+  Enabled: false
+Style/SpaceAroundBlockParameters:
+  Enabled: false
+
+# specific project rules
+Metrics/AbcSize:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Max: 10
+Metrics/MethodLength:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Style/IfInsideElse:
+  Enabled: false
+Style/RescueModifier:
+  Enabled: false
+Style/ClassVars:
+  Enabled: false

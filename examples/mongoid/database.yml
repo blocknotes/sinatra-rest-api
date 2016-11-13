@@ -1,0 +1,13 @@
+development:
+  clients:
+    default:
+      database: sinatra-rest-api
+      hosts:
+        - localhost:27017
+
+test:
+  clients:
+    default:
+      database: sinatra-rest-api_test
+      hosts:
+        - localhost:27017

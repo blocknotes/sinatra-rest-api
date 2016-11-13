@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Test ng-admin</title>
+    <link rel="stylesheet" href="node_modules/ng-admin/build/ng-admin.min.css">
+  </head>
+  <body ng-app="myApp" ng-strict-di>
+    <!-- <script src="node_modules/angular/angular.js"></script>
+    <script src="ng-admin/src/javascripts/ng-admin.js"></script> -->
+    <script src="node_modules/ng-admin/build/ng-admin.min.js"></script>
+    <!-- <script src="node_modules/ng-admin/lib/javascripts/ng-admin.js"></script> -->
+    <div ui-view="ng-admin"></div>
+    <script type="text/javascript">
+      var LIMIT = 10;
+
+      var entities = {
+        'writers': 'writer',
+        'books': 'book',
+        'categories': 'category',
+        'chapters': 'chapter',
+        'tags': 'tag'
+      };
+      var myApp = angular.module( 'myApp', [ 'ng-admin' ] );
+      myApp.config( [ 'NgAdminConfigurationProvider', function( NgAdminConfigurationProvider ) {
+        var nga = NgAdminConfigurationProvider;
+        // create an admin application
+        var admin = nga.application( 'My First Admin' ).baseApiUrl( 'http://127.0.0.1:3000/' );
+
+        var authors = nga.entity('writers');
+        var books = nga.entity('books');
+        var categories = nga.entity('categories' ).readOnly();
+        var chapters = nga.entity('chapters');
+        var tags = nga.entity('tags');
+
+        // Authors
+        authors.listView().fields([
+          nga.field( 'id' ),
+          nga.field( 'name' ).isDetailLink( true ),
+          nga.field( 'email' )
+        ]).listActions( [ 'show', 'delete' ] ).perPage( LIMIT );
+        authors.showView().fields([
+          nga.field( 'name' ),
+          nga.field( 'email' ),
+          nga.field( 'books', 'embedded_list' ).targetEntity( books ).targetFields( [ nga.field( 'title' ) ] )
+        ]);
+        authors.creationView().fields([
+          nga.field( 'name' ),
+          nga.field( 'email' )
+        ]);
+        authors.editionView().fields( authors.creationView().fields() );
+
+        // Books
+        books.listView().fields([
+          nga.field( 'id' ),
+          nga.field( 'title' ).isDetailLink(true),
+          // nga.field( 'description', 'text' ),
+          nga.field( 'pages', 'number' ),
+          nga.field( 'price', 'number' ).format( '$0,0.00' ),
+          // nga.field( 'dt', 'date' ),
+          nga.field( 'author_id', 'reference' ).targetEntity( authors ).targetField( nga.field( 'name' ) ),
+          nga.field( 'category_id', 'reference' ).targetEntity( categories ).targetField( nga.field( 'name' ) )
+        ]).listActions( [ 'show', 'delete' ] ).perPage( LIMIT );
+        books.showView().fields([
+          // nga.field( 'id' ),
+          nga.field( 'title' ).isDetailLink( true ),
+          nga.field( 'description', 'text' ),
+          nga.field( 'pages', 'number' ),
+          nga.field( 'price', 'number' ).format( '$0,0.00' ),
+          // nga.field( 'dt', 'date' ),
+          nga.field( 'author_id', 'reference' ).targetEntity( authors ).targetField( nga.field( 'name' ) ),
+          nga.field( 'category_id', 'reference' ).targetEntity( categories ).targetField( nga.field( 'name' ) ),
+          nga.field( 'chapters', 'embedded_list' ).targetEntity( chapters ).targetFields( [ nga.field( 'title' ) ] ),
+          nga.field( 'tags', 'embedded_list' ).targetEntity( tags ).targetFields( [ nga.field( 'name' ) ] )
+        ]);
+        books.creationView().fields([
+          // nga.field( 'id' ),
+          nga.field( 'title' ).isDetailLink( true ),
+          nga.field( 'description', 'text' ),
+          nga.field( 'pages', 'number' ),
+          nga.field( 'price', 'number' ).format( '$0,0.00' ),
+          // nga.field( 'dt', 'date' ),
+          nga.field( 'author_id', 'reference' ).targetEntity( authors ).targetField( nga.field( 'name' ) ),
+          nga.field( 'category_id', 'reference' ).targetEntity( categories ).targetField( nga.field( 'name' ) ),
+          // nga.field( 'chapters', 'referenced_list' ).targetEntity( chapters ).targetReferenceField( 'book_id' ).targetFields( [ nga.field( 'id' ), nga.field( 'title' ) ] ) // NO
+
+          // nga.field( 'chapters', 'embedded_list' ).targetEntity( chapters ).targetFields( [ nga.field( 'title' ) ] ) // NO
+
+          // nga.field( 'chapters', 'reference_many' ).targetEntity( chapters ).targetField( nga.field( 'title' ) )
+          // .singleApiCall( function( ids ) { return {'id': ids }; })
+          // nga.field( 'chapters', 'reference_many' ).targetEntity( chapters ).targetField( nga.field( 'title' ) )
+          // nga.field( 'chapters', 'reference_many' ).targetEntity( chapters ).targetField( nga.field( 'title' ) ).singleApiCall( function( tagIds ) {
+          //   return { '_where': "['id IN ?',['1','2']]" };
+          // })
+          // _where=["id IN ?",["1","2"]]
+        ]);
+        books.editionView().fields( books.creationView().fields() );
+
+        // Categories
+        categories.listView().fields([
+          nga.field( 'id' ),
+          nga.field( 'name' ).isDetailLink( true )
+        ]).listActions( [ 'show' ] ).perPage( LIMIT );
+        categories.showView().fields([
+          nga.field( 'name' ),
+          nga.field( 'books', 'embedded_list' ).targetEntity( books ).targetFields( [ nga.field( 'title' ) ] )
+        ]);
+
+        // Chapters
+        chapters.listView().fields([
+          nga.field( 'id' ),
+          nga.field( 'title' ).isDetailLink( true )
+        ]).listActions( [ 'show', 'delete' ] ).perPage( LIMIT );
+        chapters.showView().fields([
+          nga.field( 'id' ),
+          nga.field( 'title' ),
+          nga.field( 'book_id', 'reference' ).targetEntity( books ).targetField( nga.field( 'title' ) )
+        ]);
+        chapters.creationView().fields([
+          nga.field( 'title' )
+        ]);
+        chapters.editionView().fields( chapters.creationView().fields() );
+
+        // Tags
+        tags.listView().fields([
+          nga.field( 'id' ),
+          nga.field( 'name' ).isDetailLink( true )
+        ]).listActions( [ 'show', 'delete' ] ).perPage( LIMIT );
+        tags.showView().fields([
+          nga.field( 'id' ),
+          nga.field( 'name' ),
+          nga.field( 'books', 'embedded_list' ).targetEntity( books ).targetFields( [ nga.field( 'title' ) ] )
+        ]);
+        tags.creationView().fields([
+          nga.field( 'name' )
+        ]);
+        tags.editionView().fields( tags.creationView().fields() );
+
+        admin.addEntity( authors );
+        admin.addEntity( books );
+        admin.addEntity( categories );
+        admin.addEntity( chapters );
+        admin.addEntity( tags );
+
+        nga.configure( admin );
+      }]);
+
+      myApp.config( [ 'RestangularProvider', function( RestangularProvider ) {
+        RestangularProvider.addFullRequestInterceptor( function( element, operation, what, url, headers, params, httpConfig ) {
+          if( operation == 'getList' ) {
+            if( params._page && params._perPage ) {
+              params.limit = params._perPage;
+              params.offset = ( params._page - 1 )* params.limit;
+              delete params._page;
+              delete params._perPage;
+            }
+          }
+          else if( operation == 'post' || operation == 'put' ) {
+            ret = {}
+            ret[entities[what]] = element;
+            return { element: ret }
+          }
+          // return { element: element };
+          return { params: params };
+        });
+      }]);
+    </script>
+  </body>
+</html>

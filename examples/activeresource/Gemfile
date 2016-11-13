@@ -1,0 +1,10 @@
+source 'https://rubygems.org'
+
+gem 'pry'
+gem 'pry-rescue'
+
+gem 'sinatra'
+gem 'slim'
+gem 'thin'
+
+gem 'activeresource'
