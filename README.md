@@ -51,7 +51,6 @@ Run individual example apps tests:
 ### To Do
 
 - Improve documentation
-- Sequel: improve nested attributes assignment (model_ids parameter)
 - Add fields to models (singular name OK, plural name OK, enabled actions, etc.)
 - Add more relations like (second_category on books)
 - Add model like CoverImage

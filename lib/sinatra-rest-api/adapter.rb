@@ -124,25 +124,17 @@ module Sinatra
           list: ->( params, fields ) { @klass.select( *fields ).where( params[:_where] ).offset( params[:offset].to_i ).limit( params[:limit].nil? ? nil : params[:limit].to_i ) },
           # create: ->( params ) { @klass.insert( params[:_data] ) },
           create: lambda do |params|
-            # Look for nested ids
+            # Search nested ids
             ids = {}
-            params[:_data].keys.reject { |k| !k.end_with?( '_ids' ) }.each do |key|
-              res = key.gsub( /_ids/, '' )
-              ids[res] = params[:_data].delete( key ).map( &:to_i )
-              # TODO: add only if the relation is valid
+            params[:_data].keys.reject { |k| !k.end_with?( '_ids' ) }.each do |k|
+              nk = k.sub( /_ids$/, '_pks' )
+              ids[nk] = params[:_data].delete k
             end
+            # Create a new record
             row = @klass.new( params[:_data] )
             row.save
-            # Updates relations
-            ids.each do |res, lst|
-              # TODO: improve: the resource could not be in klasses (not mapped)
-              model = Provider.klasses.map { |_k, v| v[:class] if v[:model_singular] == res }.compact.first
-              tab = model.table_name
-              # tab = Provider.klasses[res].table_name
-              current = row.send( tab ).map( &:id )
-              ( current - lst ).each { |t| row.send( "remove_#{res}", t ) }
-              ( lst - current ).each { |t| row.send( "add_#{res}", t ) }
-            end
+            # Update ids
+            row.update( ids ) unless ids.empty?
             { id: row.id }
           end,
           truncate: ->( _params ) { @klass.truncate },
@@ -150,26 +142,12 @@ module Sinatra
           read: ->( params ) { @klass.with_pk!( params[:id] ) },
           update: lambda do |params|
             row = @klass.with_pk!( params[:id] ) # Same as read
-            # Look for nested ids
-            # mapping[:relations].call( nil ).map { |rel| "#{rel.to_s}_ids" }
-            ids = {}
-            params[:_data].keys.reject { |k| !k.end_with?( '_ids' ) }.each do |key|
-              res = key.gsub( /_ids/, '' )
-              ids[res] = params[:_data].delete( key ).map( &:to_i )
-              # TODO: add only if the relation is valid
+            # Adjust nested ids
+            params[:_data].keys.reject { |k| !k.end_with?( '_ids' ) }.each do |k|
+              nk = k.sub( /_ids$/, '_pks' )
+              params[:_data][nk] = params[:_data].delete k
             end
-            ret = row.update( params[:_data] )
-            # Updates relations
-            ids.each do |res, lst|
-              # TODO: improve: the resource could not be in klasses (not mapped)
-              model = Provider.klasses.map { |_k, v| v[:class] if v[:model_singular] == res }.compact.first
-              tab = model.table_name
-              # tab = Provider.klasses[res].table_name
-              current = row.send( tab ).map( &:id )
-              ( current - lst ).each { |t| row.send( "remove_#{res}", t ) }
-              ( lst - current ).each { |t| row.send( "add_#{res}", t ) }
-            end
-            ret
+            row.update( params[:_data] )
           end,
           delete: lambda do |params|
             row = @klass.with_pk!( params[:id] ) # Same as read

@@ -99,7 +99,7 @@ module SequelTest
     # model Author, actions: { list: { verb: :post }, read: { verb: :post } }
     # model Author, actions: { list: true, read: true }
 
-    # set :restapi_request_type, :json
+    set :restapi_request_type, :json
 
     resource Author, singular: 'writer' # , plural: 'writers'
     resource Book
