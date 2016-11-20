@@ -33,6 +33,8 @@ module SequelTest
 
   # An author
   class Author < Sequel::Model
+    plugin :timestamps, update_on_create: true
+
     one_to_many :books
 
     def validate
@@ -44,6 +46,8 @@ module SequelTest
 
   # A book
   class Book < Sequel::Model
+    plugin :timestamps, update_on_create: true
+
     many_to_one :author
     many_to_one :category
     many_to_many :tags
@@ -62,16 +66,22 @@ module SequelTest
 
   # A category
   class Category < Sequel::Model
+    plugin :timestamps, update_on_create: true
+
     one_to_many :books
   end
 
   # A tag
   class Tag < Sequel::Model
+    plugin :timestamps, update_on_create: true
+
     many_to_many :books
   end
 
   # A chapter
   class Chapter < Sequel::Model
+    plugin :timestamps, update_on_create: true
+
     many_to_one :book
 
     def validate
