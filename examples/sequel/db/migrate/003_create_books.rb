@@ -9,6 +9,8 @@ Sequel.migration do
       DateTime :dt
       Integer :author_id
       Integer :category_id
+      Timestamp :created_at
+      Timestamp :updated_at
     end
   end
 

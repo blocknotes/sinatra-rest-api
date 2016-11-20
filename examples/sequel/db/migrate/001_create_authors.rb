@@ -4,6 +4,8 @@ Sequel.migration do
       primary_key :id
       String :name, null: false
       String :email, null: false
+      Timestamp :created_at
+      Timestamp :updated_at
     end
   end
 

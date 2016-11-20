@@ -142,7 +142,6 @@ module ActionTests
       it 'should not create a chapter without data' do
         chapters = [
           {},
-          { title: 'Chapter 3' },
           { book_id: models[:book].last.id.to_s }
         ]
         chapters.each do |chapter|

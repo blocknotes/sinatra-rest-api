@@ -33,6 +33,8 @@ module Sinatra
           # params[:_data] = params[resource]
           params.delete( resource )
         end
+        # params[:_data]['created_at'] = Time.now.strftime( '%F %T' ).to_s
+        # params[:_data]['updated_at'] = Time.now.strftime( '%F %T' ).to_s
         result = mapping[:create].call( params )
         # route_args[:response].headers['Location'] = '/' # TODO: todo
         [ 201, result.to_json ]

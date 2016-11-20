@@ -25,8 +25,10 @@ module SequelTest
     Rake::Task['db:migrate'].invoke
   end
 
+  Sequel::Model.plugin :association_pks
   Sequel::Model.plugin :json_serializer
   Sequel::Model.plugin :nested_attributes
+  Sequel::Model.plugin :timestamps
   Sequel::Model.plugin :validation_helpers
 
   # An author

@@ -13,8 +13,10 @@
 ActiveRecord::Schema.define(version: 6) do
 
   create_table "authors", force: :cascade do |t|
-    t.string "name",  null: false
-    t.string "email", null: false
+    t.string   "name",       null: false
+    t.string   "email",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "books", force: :cascade do |t|
@@ -25,25 +27,35 @@ ActiveRecord::Schema.define(version: 6) do
     t.datetime "dt"
     t.integer  "author_id"
     t.integer  "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "books_tags", force: :cascade do |t|
-    t.integer "book_id", null: false
-    t.integer "tag_id",  null: false
+    t.integer  "book_id",    null: false
+    t.integer  "tag_id",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name", null: false
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "chapters", force: :cascade do |t|
-    t.string  "title",   null: false
-    t.integer "page"
-    t.integer "book_id", null: false
+    t.string   "title",      null: false
+    t.integer  "page"
+    t.integer  "book_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "name", null: false
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

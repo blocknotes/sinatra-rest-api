@@ -9,6 +9,8 @@ class CreateBooks < ActiveRecord::Migration[4.2]
       t.datetime :dt
       t.integer :author_id
       t.integer :category_id
+      t.timestamp :created_at
+      t.timestamp :updated_at
     end
   end
 end

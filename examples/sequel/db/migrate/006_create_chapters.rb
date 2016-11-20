@@ -5,6 +5,8 @@ Sequel.migration do
       String :title, null: false
       Integer :page
       Integer :book_id, null: false
+      Timestamp :created_at
+      Timestamp :updated_at
     end
   end
 

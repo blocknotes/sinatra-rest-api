@@ -4,6 +4,8 @@ Sequel.migration do
       primary_key :id
       Integer :book_id, null: false
       Integer :tag_id, null: false
+      Timestamp :created_at
+      Timestamp :updated_at
     end
   end
 

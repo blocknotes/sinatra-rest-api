@@ -18,6 +18,7 @@ module MongoidTest
   # An author
   class Author
     include Mongoid::Document
+    include Mongoid::Timestamps
 
     field :name, type: String
     field :email, type: String
@@ -32,6 +33,7 @@ module MongoidTest
   # A book
   class Book
     include Mongoid::Document
+    include Mongoid::Timestamps
 
     # Fields
     field :title, type: String
@@ -62,6 +64,7 @@ module MongoidTest
   # A category
   class Category
     include Mongoid::Document
+    include Mongoid::Timestamps
 
     field :name, type: String
 
@@ -74,6 +77,7 @@ module MongoidTest
   # A tag
   class Tag
     include Mongoid::Document
+    include Mongoid::Timestamps
 
     field :name, type: String
 
@@ -83,6 +87,7 @@ module MongoidTest
   # A chapter
   class Chapter
     include Mongoid::Document
+    include Mongoid::Timestamps
 
     belongs_to :book
 

@@ -131,7 +131,8 @@ module Sinatra
               ids[res] = params[:_data].delete( key ).map( &:to_i )
               # TODO: add only if the relation is valid
             end
-            row = @klass.new( params[:_data] ).save
+            row = @klass.new( params[:_data] )
+            row.save
             # Updates relations
             ids.each do |res, lst|
               # TODO: improve: the resource could not be in klasses (not mapped)
