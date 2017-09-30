@@ -1,15 +1,16 @@
-# Sinatra REST API
+# Sinatra REST API [![Gem Version](https://badge.fury.io/rb/sinatra-rest-api.svg)](https://badge.fury.io/rb/sinatra-rest-api)
 
 A Sinatra component that generates CRUD routes for database ORM models.
-This is an *alpha* version, structure could change in future release.
 
 Features:
-- small and compact
 - supports Active Record, Mongoid and Sequel ORMs
 - default actions already setup
-- nested resources
+- nested resources available
 
-Example:
+Install: `gem install sinatra-rest-api` (or in Gemfile)
+
+### Example
+
 ```rb
 class Book < ActiveRecord::Base
 end
@@ -37,9 +38,9 @@ GET: /categories/:id.?:format?
 GET: /categories/?.?:format?
 ```
 
-### More examples
+## More examples
 
-See [examples](examples/). Execute: `thin start` in one of the examples dir.
+See [examples](examples/). Execute: `thin start` in the folder of an example.
 
 ### Tests
 
@@ -48,21 +49,14 @@ Run individual example apps tests:
 - `rspec spec/app_mongoid_spec.rb`
 - `rspec spec/app_sequel_spec.rb`
 
-### To Do
+## Do you like it? Star it!
 
-- Improve documentation
-- Add fields to models (singular name OK, plural name OK, enabled actions, etc.)
-- Add more relations like (second_category on books)
-- Add model like CoverImage
-- Improve tests (more examples, check relations, check every option, etc.)
-- ng-admin example: manage one_to_many and many_to_many relations
-- Improve security
-- Support nested resources? (ex. /books/1/authors)
+If you use this component just star it. A developer is more motivated to improve a project when there is some interest.
 
-### ISC License
+## Contributors
 
-Copyright (c) 2016, [Mattia Roccoberton](http://blocknot.es)
+- [Mattia Roccoberton](http://blocknot.es) - creator, maintainer
 
-Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+## License
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+[ISC](LICENSE)

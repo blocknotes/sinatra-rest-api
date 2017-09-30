@@ -2,7 +2,7 @@ module Sinatra
   module RestApi
     # Prodiver
     class Provider
-      OPTIONS = [ :actions, :plural, :singular ].freeze
+      OPTIONS = [ :actions, :plural, :singular, :include ].freeze
       REQUEST = {
         # content_types: [ :formdata, :json, :multipart, :www_form ]
         content_types: [ :json, :www_form ]

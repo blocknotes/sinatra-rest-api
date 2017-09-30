@@ -51,7 +51,7 @@ module Sinatra
         # params[:_where] = '1=1' unless params[:_where].present?
         route_args[:response].headers['X-Total-Count'] = mapping[:count].call( params ).to_s
         result = mapping[:list].call( params, route_args[:fields] )
-        [ 200, result.to_json( include: mapping[:relations].call( nil ) ) ]
+        [ 200, result.to_json( include: route_args[:options].include?( :include ) ? route_args[:options][:include] : mapping[:relations].call( nil ) ) ]
       end
 
       def self.other( _route_args, params, mapping )
@@ -63,7 +63,7 @@ module Sinatra
 
       def self.read( _route_args, params, mapping )
         result = mapping[:read].call( params )
-        [ 200, result.to_json( include: mapping[:relations].call( nil ) ) ]
+        [ 200, result.to_json( include: route_args[:options].include?( :include ) ? route_args[:options][:include] : mapping[:relations].call( nil ) ) ]
       end
 
       def self.update( route_args, params, mapping )

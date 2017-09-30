@@ -1,5 +1,3 @@
-require 'pry'
-
 module Sinatra
   module RestApi
     # ORM Mapping

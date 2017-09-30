@@ -33,10 +33,10 @@ module Sinatra
           path = "/#{@plural}#{data[:path]}"
           if data[:verb].is_a?( Array )
             data[:verb].each do |verb|
-              prepare_route( route: route, resource: @path_singular, verb: verb, path: path, fields: data[:fields], mapping: @provider.adapter.mapping )
+              prepare_route( route: route, resource: @path_singular, verb: verb, path: path, fields: data[:fields], mapping: @provider.adapter.mapping, options: @provider.options )
             end
           else
-            prepare_route( route: route, resource: @path_singular, verb: data[:verb], path: path, fields: data[:fields], mapping: @provider.adapter.mapping )
+            prepare_route( route: route, resource: @path_singular, verb: data[:verb], path: path, fields: data[:fields], mapping: @provider.adapter.mapping, options: @provider.options )
           end
         end
         @routes
