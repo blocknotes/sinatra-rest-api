@@ -4,7 +4,7 @@ $LOAD_PATH.unshift( lib ) unless $LOAD_PATH.include?( lib )
 
 Gem::Specification.new do |s|
   s.name        = 'sinatra-rest-api'
-  s.version     = '0.1.1'
+  s.version     = '0.1.2'
   s.authors     = [ 'Mattia Roccoberton' ]
   s.email       = 'mat@blocknot.es'
   s.homepage    = 'https://github.com/blocknotes/sinatra-rest-api'

@@ -61,7 +61,7 @@ module Sinatra
         [ 200, ret.nil? ? DONE.to_json : ret.to_json ]
       end
 
-      def self.read( _route_args, params, mapping )
+      def self.read( route_args, params, mapping )
         result = mapping[:read].call( params )
         [ 200, result.to_json( include: route_args[:options].include?( :include ) ? route_args[:options][:include] : mapping[:relations].call( nil ) ) ]
       end
