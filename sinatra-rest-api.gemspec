@@ -4,7 +4,7 @@ $LOAD_PATH.unshift( lib ) unless $LOAD_PATH.include?( lib )
 
 Gem::Specification.new do |s|
   s.name        = 'sinatra-rest-api'
-  s.version     = '0.1.2'
+  s.version     = '0.1.3'
   s.authors     = [ 'Mattia Roccoberton' ]
   s.email       = 'mat@blocknot.es'
   s.homepage    = 'https://github.com/blocknotes/sinatra-rest-api'
@@ -16,5 +16,5 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.0.0'
 
-  s.add_runtime_dependency 'sinatra', '> 1.4.0', '~> 2.0'
+  s.add_runtime_dependency 'sinatra', '> 1.4'
 end

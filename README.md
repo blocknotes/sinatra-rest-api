@@ -47,9 +47,15 @@ GET:    /categories/:id.?:format?
 GET:    /categories/?.?:format?
 ```
 
+#### More examples
+
+See [examples](examples/). Execute: `thin start` in the folder of an example.
+
 #### Using inside a Rails app
 
-A simple way to add an API for every model on an existing Rails app:
+Let's create an Importer class to import data between 2 Rails app.
+
+A simple way to add an API for every model on the source app:
 
 - create a sinatra app in: `lib/sinatra_app/app.rb`:
 
@@ -61,12 +67,12 @@ class MySinatraApp < Sinatra::Base
 
   ActiveRecord::Base.descendants.each do |model|  # Iterate all models
     next if model.abstract_class
-    resource model, include: false
+    resource model, actions: [ :list, :read ], include: false
   end
 end
 ```
 
-- edit `config/application.rb`:
+- load the sinatra app editing `config/application.rb`:
 
 ```rb
 module RailsSinatra
@@ -78,7 +84,7 @@ module RailsSinatra
 end
 ```
 
-- edit `config/routes.rb`:
+- setup the routes editing `config/routes.rb`:
 
 ```rb
 Rails.application.routes.draw do
@@ -86,7 +92,9 @@ Rails.application.routes.draw do
 end
 ```
 
-- now you can access to every model under 'sinatra' path, example: '/sinatra/posts.json' and you could also access these models from anoter app using *ActiveResource* gem with something like this:
+- now you can access to every model under 'sinatra' path, example: '/sinatra/posts.json'
+
+- on the destination app you can access these models using *ActiveResource* gem:
 
 ```rb
 class Importer < ActiveResource::Base
@@ -101,10 +109,6 @@ end
 # List of tags names:
 Importer.init( 'tags' ).all.map( &:name )
 ```
-
-#### More examples
-
-See [examples](examples/). Execute: `thin start` in the folder of an example.
 
 ## Tests
 

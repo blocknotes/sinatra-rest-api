@@ -47,8 +47,7 @@ module Sinatra
 
       def self.list( route_args, params, mapping )
         # TODO: option to enable X-Total-Count ?
-        params[:_where] = params[:_where].nil? ? '1=1' : JSON.parse( params[:_where] )
-        # params[:_where] = '1=1' unless params[:_where].present?
+        params[:_where] = params[:_where].nil? ? {} : JSON.parse( params[:_where] )
         route_args[:response].headers['X-Total-Count'] = mapping[:count].call( params ).to_s
         result = mapping[:list].call( params, route_args[:fields] )
         [ 200, result.to_json( include: route_args[:options].include?( :include ) ? route_args[:options][:include] : mapping[:relations].call( nil ) ) ]
