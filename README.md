@@ -14,8 +14,13 @@ Install: `gem install sinatra-rest-api` (or in Gemfile)
 For *resource* DSL keyword:
 - **actions**: list of actions to enable (array of symbols)
 - **include**: list of associations to expose in list/read actions (array of symbols) or false to skip every association
+- **limit**: set a fixed limit server side
 - **plural**: plural model name used for routes (string)
 - **singular**: singular model name for resource key (string)
+
+Routes parameters:
+- **limit**: limit results (ex. 20)
+- **offset**: results offset (ex. 40)
 
 ## Examples
 
