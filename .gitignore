@@ -1,4 +1,5 @@
 _misc/
 node_modules/
 examples/ng-admin/ng-admin/
+examples/active_record/db/schema.rb
 *.sqlite3
