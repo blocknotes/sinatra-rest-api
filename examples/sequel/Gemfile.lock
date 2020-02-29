@@ -20,10 +20,10 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    rack (2.0.6)
+    rack (2.2.2)
     rack-protection (2.0.4)
       rack
-    rake (12.3.1)
+    rake (13.0.1)
     sequel (5.14.0)
     sinatra (2.0.4)
       mustermann (~> 1.0)
@@ -64,4 +64,4 @@ DEPENDENCIES
   thin
 
 BUNDLED WITH
-   1.16.6
+   1.17.3
