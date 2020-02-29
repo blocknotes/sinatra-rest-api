@@ -23,7 +23,7 @@ GEM
     rack (2.0.6)
     rack-protection (2.0.4)
       rack
-    rake (12.3.1)
+    rake (12.3.3)
     sequel (5.14.0)
     sinatra (2.0.4)
       mustermann (~> 1.0)
