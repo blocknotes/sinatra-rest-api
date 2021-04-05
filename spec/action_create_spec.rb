@@ -83,11 +83,11 @@ module ActionTests
       end
       new_cats = rand( 4 ) + 2
       (1..new_cats).each do |_i|
-        random_books.push( title: Faker::Superhero.name, description: Faker::StarWars.quote, pages: rand( 1000 ), price: rand * 20, category_attributes: { name: Faker::Book.genre } )
+        random_books.push( title: Faker::Superhero.name, description: Faker::Quote.yoda, pages: rand( 1000 ), price: rand * 20, category_attributes: { name: Faker::Book.genre } )
       end
       new_tags = 2
       (1..new_tags).each do |_i|
-        random_books.push( title: Faker::Superhero.name, description: Faker::StarWars.quote, pages: rand( 1000 ), price: rand * 20, tags_attributes: [ { name: Faker::Hipster.word } ] )
+        random_books.push( title: Faker::Superhero.name, description: Faker::Quote.yoda, pages: rand( 1000 ), price: rand * 20, tags_attributes: [ { name: Faker::Hipster.word } ] )
       end
 
       # action: create
